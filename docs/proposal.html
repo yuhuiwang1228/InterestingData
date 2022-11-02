@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Proposal | NYC Rentals</title>
-  <meta name="description" content="Chapter 2 Proposal | NYC Rentals" />
+  <title>Chapter 2 Proposal | Research on NYC Rental Data</title>
+  <meta name="description" content="Chapter 2 Proposal | Research on NYC Rental Data" />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Proposal | NYC Rentals" />
+  <meta property="og:title" content="Chapter 2 Proposal | Research on NYC Rental Data" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Proposal | NYC Rentals" />
+  <meta name="twitter:title" content="Chapter 2 Proposal | Research on NYC Rental Data" />
   
   
   
@@ -81,6 +81,7 @@
 <li class="chapter" data-level="2.2.1" data-path="proposal.html"><a href="proposal.html#dof-condominium-comparable-rental-income-in-nyc"><i class="fa fa-check"></i><b>2.2.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
 <li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#nyc-crime"><i class="fa fa-check"></i><b>2.2.2</b> NYC crime</a></li>
 <li class="chapter" data-level="2.2.3" data-path="proposal.html"><a href="proposal.html#school-locations"><i class="fa fa-check"></i><b>2.2.3</b> School Locations</a></li>
+<li class="chapter" data-level="2.2.4" data-path="proposal.html"><a href="proposal.html#median-gross-rent"><i class="fa fa-check"></i><b>2.2.4</b> Median gross rent</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
@@ -103,7 +104,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NYC Rentals</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Research on NYC Rental Data</a>
           </h1>
         </div>
 
@@ -133,6 +134,11 @@ This dataset contains the overall crime information in New York this year. Colle
 <h3><span class="header-section-number">2.2.3</span> School Locations<a href="proposal.html#school-locations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>url: <a href="https://data.cityofnewyork.us/Education/2017-2018-School-Locations/p6h4-mpyy" class="uri">https://data.cityofnewyork.us/Education/2017-2018-School-Locations/p6h4-mpyy</a>
 This dataset contains the overall school information in New York this year. Collected by Department of Education (DOE), it is also highly reliable; As it contains the location and other detailed information(such as level, and average grades) about the schools, we can analyze the relationship between the school locations and the rental fee in NYC. The data is stored in xlsx format, and we can use read_excel() to import directly. According to the inspection, there are no missing items in the data column we use.</p>
+</div>
+<div id="median-gross-rent" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Median gross rent<a href="proposal.html#median-gross-rent" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>url:<a href="https://data.census.gov/cedsci/all?t=Housing&amp;g=0400000US36%248600000" class="uri">https://data.census.gov/cedsci/all?t=Housing&amp;g=0400000US36%248600000</a>
+This dataset contains different housing information in New York State provided by the United States Census Bureau(USCB). USCB is a principal agency of the U.S. Federal Statistical System and is in charge of gathering information on the population and economy of the country. We filter the tables by geography to all 5-digit ZIP code tabulation area in New York State and find the topics we are interested in(e.g. median gross rent). We will process the table by choosing the ZIP code in New York City only to concentrate on our topic. Since a fraction of areas has missing data, we will use the available methods to fill. The dataset can be downloaded as csv file which can be easily imported by R.</p>
 
 </div>
 </div>

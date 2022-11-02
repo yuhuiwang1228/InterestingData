@@ -5,6 +5,7 @@ data-availability
 dof-condominium-comparable-rental-income-in-nyc
 nyc-crime
 school-locations
+median-gross-rent
 data
 sources
 cleaning-transformation

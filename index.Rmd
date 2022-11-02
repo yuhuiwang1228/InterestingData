@@ -1,5 +1,5 @@
 --- 
-title: "NYC Rentals"
+title: "Research on NYC Rental Data"
 author: "Nancy Wang, Shukai Wang, Hao Pan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
