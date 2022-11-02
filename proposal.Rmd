@@ -16,3 +16,7 @@ This dataset contains the overall crime information in New York this year. Colle
 ### School Locations
 url: <https://data.cityofnewyork.us/Education/2017-2018-School-Locations/p6h4-mpyy>
 This dataset contains the overall school information in New York this year. Collected by Department of Education (DOE), it is also highly reliable; As it contains the location and other detailed information(such as level, and average grades) about the schools, we can analyze the relationship between the school locations and the rental fee in NYC. The data is stored in xlsx format, and we can use read_excel() to import directly. According to the inspection, there are no missing items in the data column we use.
+
+### Median gross rent
+url:https://data.census.gov/cedsci/all?t=Housing&g=0400000US36%248600000
+This dataset contains different housing information in New York State provided by the United States Census Bureau(USCB). USCB is a principal agency of the U.S. Federal Statistical System and is in charge of gathering information on the population and economy of the country. We filter the tables by geography to all 5-digit ZIP code tabulation area in New York State and find the topics we are interested in(e.g. median gross rent). We will process the table by choosing the ZIP code in New York City only to concentrate on our topic. Since a fraction of areas has missing data, we will use the available methods to fill. The dataset can be downloaded as csv file which can be easily imported by R. 
