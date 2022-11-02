@@ -5,3 +5,14 @@ Our research project focuses on the rental data in NYC covering more than a deca
 
 ## Data availability
 
+### DOF Condominium Comparable Rental Income in NYC
+url: <https://data.cityofnewyork.us/City-Government/DOF-Condominium-Comparable-Rental-Income-in-NYC/9ck6-2jew>
+This dataset contains the basic information of all apartments in New York, including geographic location information (coded by borough ID and priority ID) and house properties. Collected by The Department of Finance (DOF) through the investigation of apartment information, it is highly reliable and basically error free; Because it includes detailed address and house information, this dataset is very convenient for us to analyze the geographical distribution of rental prices; At the same time, according to the detailed geocoding, we can jointly analyze this dataset with other data to draw further conclusions. The data is stored in csv format, and we can use read.csv() to import directly. According to the inspection, there are no missing items in the data column we use.
+
+### NYC crime
+url: <https://data.cityofnewyork.us/Public-Safety/NYC-crime/qb7u-rbmr>
+This dataset contains the overall crime information in New York this year. Collected by New York City Police Department (NYPD), it is also highly reliable(After all, it's first-hand information); As it contains the position and other detailed information about the crimes, we can analyze the relationship between the crime rate and the rental fee in NYC. The data is stored in csv format, and we can use read.csv() to import directly. According to the inspection, there are no missing items in the data column we use.
+
+### School Locations
+url: <https://data.cityofnewyork.us/Education/2017-2018-School-Locations/p6h4-mpyy>
+This dataset contains the overall school information in New York this year. Collected by Department of Education (DOE), it is also highly reliable; As it contains the location and other detailed information(such as level, and average grades) about the schools, we can analyze the relationship between the school locations and the rental fee in NYC. The data is stored in xlsx format, and we can use read_excel() to import directly. According to the inspection, there are no missing items in the data column we use.
