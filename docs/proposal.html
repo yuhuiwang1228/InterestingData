@@ -76,7 +76,12 @@
 <li class="chapter" data-level="2" data-path="proposal.html"><a href="proposal.html"><i class="fa fa-check"></i><b>2</b> Proposal</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="proposal.html"><a href="proposal.html#research-topic"><i class="fa fa-check"></i><b>2.1</b> Research topic</a></li>
-<li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a></li>
+<li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="proposal.html"><a href="proposal.html#dof-condominium-comparable-rental-income-in-nyc"><i class="fa fa-check"></i><b>2.2.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#nyc-crime"><i class="fa fa-check"></i><b>2.2.2</b> NYC crime</a></li>
+<li class="chapter" data-level="2.2.3" data-path="proposal.html"><a href="proposal.html#school-locations"><i class="fa fa-check"></i><b>2.2.3</b> School Locations</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
@@ -114,7 +119,22 @@
 </div>
 <div id="data-availability" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data availability<a href="proposal.html#data-availability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="dof-condominium-comparable-rental-income-in-nyc" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> DOF Condominium Comparable Rental Income in NYC<a href="proposal.html#dof-condominium-comparable-rental-income-in-nyc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>url: <a href="https://data.cityofnewyork.us/City-Government/DOF-Condominium-Comparable-Rental-Income-in-NYC/9ck6-2jew" class="uri">https://data.cityofnewyork.us/City-Government/DOF-Condominium-Comparable-Rental-Income-in-NYC/9ck6-2jew</a>
+This dataset contains the basic information of all apartments in New York, including geographic location information (coded by borough ID and priority ID) and house properties. Collected by The Department of Finance (DOF) through the investigation of apartment information, it is highly reliable and basically error free; Because it includes detailed address and house information, this dataset is very convenient for us to analyze the geographical distribution of rental prices; At the same time, according to the detailed geocoding, we can jointly analyze this dataset with other data to draw further conclusions. The data is stored in csv format, and we can use read.csv() to import directly. According to the inspection, there are no missing items in the data column we use.</p>
+</div>
+<div id="nyc-crime" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> NYC crime<a href="proposal.html#nyc-crime" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>url: <a href="https://data.cityofnewyork.us/Public-Safety/NYC-crime/qb7u-rbmr" class="uri">https://data.cityofnewyork.us/Public-Safety/NYC-crime/qb7u-rbmr</a>
+This dataset contains the overall crime information in New York this year. Collected by New York City Police Department (NYPD), it is also highly reliable(After all, it’s first-hand information); As it contains the position and other detailed information about the crimes, we can analyze the relationship between the crime rate and the rental fee in NYC. The data is stored in csv format, and we can use read.csv() to import directly. According to the inspection, there are no missing items in the data column we use.</p>
+</div>
+<div id="school-locations" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> School Locations<a href="proposal.html#school-locations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>url: <a href="https://data.cityofnewyork.us/Education/2017-2018-School-Locations/p6h4-mpyy" class="uri">https://data.cityofnewyork.us/Education/2017-2018-School-Locations/p6h4-mpyy</a>
+This dataset contains the overall school information in New York this year. Collected by Department of Education (DOE), it is also highly reliable; As it contains the location and other detailed information(such as level, and average grades) about the schools, we can analyze the relationship between the school locations and the rental fee in NYC. The data is stored in xlsx format, and we can use read_excel() to import directly. According to the inspection, there are no missing items in the data column we use.</p>
 
+</div>
 </div>
 </div>
             </section>

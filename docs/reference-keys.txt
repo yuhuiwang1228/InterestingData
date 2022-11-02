@@ -2,6 +2,9 @@ introduction
 proposal
 research-topic
 data-availability
+dof-condominium-comparable-rental-income-in-nyc
+nyc-crime
+school-locations
 data
 sources
 cleaning-transformation
