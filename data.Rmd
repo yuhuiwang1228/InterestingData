@@ -119,10 +119,11 @@ library(colorspace)
 library(naniar)
 library(mi)
 library(DataExplorer)
+library(readxl)
 ```
 
 ```{r setup, include=FALSE}
-dat1=read.csv("E:/CU22fall/EDAV/FinalProjectEDAV/Data/DOF_Condominium_Comparable_Rental_Income_in_NYC.csv")
+dat1=read.csv("DOF_Condominium_Comparable_Rental_Income_in_NYC.csv")
 dat1=dat1[,1:15]
 dat_county=dat1 %>% 
   mutate(county = case_when(
@@ -173,27 +174,27 @@ As there are more than 20,000 rows of data, most of the rows are complete cases.
 
 ### Housing:United States Census Bureau
 ```{r}
-GrossRent = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25063 Gross Rent/B25063-2021.xlsx',sheet=2))
+GrossRent = suppressMessages(read_excel('B25063-2021.xlsx',sheet=2))
 GrossRent = GrossRent[4:27,c(1,2,4,6,8,10)]
 sum(is.na(GrossRent))
 ```
 ```{r}
-MedianGrossRent = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25064 MEDIAN GROSS RENT/B25064 ALL 5 YEARS.xlsx'))
+MedianGrossRent = suppressMessages(read_excel('B25064 ALL 5 YEARS.xlsx'))
 MedianGrossRent = MedianGrossRent[-1,c(1,4,6,8,10,12,14)]
 sum(is.na(MedianGrossRent))
 ```
 ```{r}
-VacancyStatus = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25004 VACANCY STATUS/B25004-2021.xlsx',sheet=2))
+VacancyStatus = suppressMessages(read_excel('B25004-2021.xlsx',sheet=2))
 VacancyStatus = VacancyStatus[3:9,c(1,2,4,6,8,10)]
 sum(is.na(VacancyStatus))
 ```
 ```{r}
-MGR_YearMoved = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25113 MEDIAN GROSS RENT BY YEAR HOUSEHOLDER/B25113-2021.xlsx',sheet=2))
+MGR_YearMoved = suppressMessages(read_excel('B25113-2021.xlsx',sheet=2))
 MGR_YearMoved = MGR_YearMoved[4:9,c(1,2,4,6,8,10)]
 sum(is.na(MGR_YearMoved))
 ```
 ```{r}
-MapData = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/MapData/Map-2021.xlsx',sheet=2))
+MapData = suppressMessages(read_excel('Map-2021.xlsx',sheet=2))
 for(i in colnames(MapData)){
   names(MapData)[names(MapData) == i] = gsub("ZCTA5 ", "",i)
 }
