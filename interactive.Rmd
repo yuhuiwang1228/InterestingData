@@ -1,3 +1,127 @@
 # Interactive component
 
+<script src="https://d3js.org/d3.v4.js"></script>
 
+<div id="div1">
+</div>
+
+<script>
+
+  const width = 960; 
+  const height = 1160;
+
+    
+  const projection = d3.geoEquirectangular()
+    .scale(47000)
+    .translate([400,250]);
+    
+  const svg = d3.select("div#div1").append("svg")
+    .attr("width", 1500)
+    .attr("height", 1500);
+    
+  svg.append("text").text("")
+        .attr("x", "300")
+        .attr("y", "50")
+        .attr("font-weight","bold");
+  svg.append("path").attr("id","p1")
+      .attr("fill","#E76BF3");
+  svg.append("path").attr("id","p2").attr("fill","#F8766D");
+  svg.append("path").attr("id","p3").attr("fill","#00BF7D");
+  svg.append("path").attr("id","p4").attr("fill","#A3A500");
+  svg.append("path").attr("id","p5").attr("fill","#00B0F6");
+   
+  d3.json("https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/Borough%20Boundaries.geojson",function(error, nycMap) {
+    const center = d3.geoCentroid(nycMap);
+    projection.center(center);
+    const path = d3.geoPath().projection(projection);
+    svg.selectAll("path")
+      .data(nycMap.features)
+      .attr("d", path);
+  });
+
+
+const imgx=100;
+const imgy=430
+
+svg.select("path#p1")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/richmond.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+        svg.select("text").text("Richmond County");
+      });
+      
+svg.select("path#p1")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+        svg.select("text").text("");
+      });   
+      
+svg.select("path#p2")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/bronx.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+        svg.select("text").text("Bronx County");
+      });
+      
+svg.select("path#p2")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+        svg.select("text").text("");
+      }); 
+      
+svg.select("path#p3")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/newyork.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+        svg.select("text").text("New York County");
+      });
+      
+svg.select("path#p3")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+        svg.select("text").text("");
+      }); 
+      
+svg.select("path#p4")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/kings.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+       svg.select("text").text("Kings County");
+      
+      });
+      
+svg.select("path#p4")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+       svg.select("text").text("");
+      }); 
+      
+svg.select("path#p5")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/queens.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+       svg.select("text").text("Queens County");
+      });
+      
+svg.select("path#p5")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+       svg.select("text").text("");
+      }); 
+      
+</script>
