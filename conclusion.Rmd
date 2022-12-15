@@ -1,2 +1,9 @@
 # Conclusion
 
+In our project, in terms of data, we have extensively collected datasets and determined to use some of them through practice. We cleaned, transformed and analyzed the missing value patterns of the datasets used. In terms of content, we explored the relationship between housing prices and regions, housing types, and built year through appropriate visualization of different types of data; In addition, we also explored the correlation between different factors.
+
+However, we have to admit there are some limitations in our current work. Due to the high commercial value of rental data. It is difficult to collect a large amount of reliable data. Besides, we only focused on the the influence of room properties on itself, and didn't consider the impact of location(which is related with crime rate, school entrance rate and so on) and policies on housing prices, which made our analysis incomplete. 
+
+So, for these limitations, we expect to conduct some more in-depth analysis, including the impact of various external factors on house prices, as well as the time series characteristics of house prices, etc. In addition, we will continue to strive to collect more and more extensive relevant data, to enhance the persuasiveness of the results.
+
+Through the project, we practiced the theoretical knowledge we have learned, which has consolidated our grasp of these knowledge. At the same time, we have also gained some experience in dealing with problems in actual analysis, helping us to better visualize and analyze problems in various situations. Finally, this project makes us realize the importance of visualization in practical work, we expect to further study the visualization methods in later work and study.

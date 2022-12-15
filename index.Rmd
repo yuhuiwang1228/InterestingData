@@ -1,9 +1,19 @@
 --- 
-title: "Research on NYC Rental Data"
-author: "Nancy Wang, Shukai Wang, Hao Pan"
+title: "YOUR TITLE HERE"
+author: "YOUR NAMES HERE"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
 
 # Introduction
+
+---
+output:
+  word_document: default
+  html_document: default
+---
+
+Rental is always a heated topic in NYC, which is a metropolis with the largest city population exceeding 8 million. According to $New \space York \space Post$, in June 2022 the average rental price in Manhattan incredibly was $\$5,058$, unprecedented in NYC history. (<https://nypost.com/article/where-nyc-real-estate-rental-market-stands-right-now-housing-prices/>) Therefore, it is necessary to make statistics and research on the rental market data and summarize the market rules, so that tenants and landlords can better understand the market information and resource matching will be optimized, that's the theme and significance of our research.
+
+To be specific, Our research project focuses on the rental data in NYC covering more than a decade till 2022. We plan to study how the rental prices has changed in recent years, with variation in locations, built years, house area and so on, to see the chronological and geographical trends and on the prices. In order to keep our theme accurate and professional, we mainly focus on the regular changes of housing prices and the impact of different housing sources on their housing prices. We find interesting results and rules by visualizing the datasets.
 
