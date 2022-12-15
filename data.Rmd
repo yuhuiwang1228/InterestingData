@@ -2,7 +2,214 @@
 
 ## Sources
 
+After refining our project target, we mainly use the following two data sources.
+
+### DOF Condominium Comparable Rental Income in NYC
+
+url: https://data.cityofnewyork.us/City-Government/DOF-Condominium-Comparable-Rental-Income-in-NYC/9ck6-2jew
+
+This dataset is used by DOF(The Department of Finance) to value condominiums, which contains basic information of condominiums for rent in New York, including geographic location information (coded by borough ID and priority ID) and house properties. Collected by The Department of Finance (DOF) through the investigation of apartment information, it is highly reliable and basically error free; Because it includes detailed address and house information, this dataset is very convenient for us to analyze the geographical distribution of rental prices. The dataset contains 61 columns, but we only use a few of these. The used columns' infomation:
+
+Boro-Block-Lot:
+Text variable. The Borough-Block-Lot location of the subject condominium. The lot identifies the condominium billing lot generally associated with the condominium management organization.
+
+Building Classification:
+Text variable(we transform it later). The Building Class code is used to describe a property’s use. This report includes the two character code as well as the description of the building class.
+
+Total Units:
+Number variable. Total number of units in the building
+
+Year Built:
+Text variable. The year the building was built
+
+Estimated Gross Income:	
+Number variable. Estimated Income per SquareFoot * Gross SquareFoot
+
+Gross Income per SqFt:	
+Number variable. Estimated income per squarefoot of median comparable
+
+Full Market Value	
+Number variable. Current year’s total market value of the land and building
+
+### Housing:United States Census Bureau
+
+This data source contains different housing information in New York State provided by the United States Census Bureau(USCB). USCB is a principal agency of the U.S. Federal Statistical System and is in charge of gathering information on the population and economy of the country. We filter the tables by geography and find the topics we are interested in. The dataset can be downloaded as csv or excel file which can be easily imported by R. All the tables from this source is not tidy, and the data type is character although it actually provides numerical information. We will transform it later.
+
+#### Gross Rent
+url:https://data.census.gov/table?q=B250&g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&tid=ACSDT1Y2021.B25063
+
+This table contains 1-Year Estimates of the rent of the occupied housing units in five boroughs in New York City.
+
+Size: 27 rows by 12 columns
+
+Columns: Estimates and Margin of Error for five boroughs
+
+Row names: The range of rent(e.g. '\$700 to \$749')
+
+#### Median Gross Rent
+url:https://data.census.gov/table?q=B250&g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&tid=ACSDT1Y2021.B25064
+
+url:https://data.census.gov/table?q=B2506&g=0400000US36$8600000&tid=ACSDT5Y2021.B25064
+
+The first table contains 5-Year Estimates of the median gross rent of the occupied housing units in five boroughs in New York City in different years.
+
+Size:6 rows by 12 columns
+
+Columns: Estimates and Margin of Error for five boroughs
+
+Row names: Year
+
+The second table contains 1-Year Estimates of the median gross rent of the occupied housing units filter by the ZIP code in New York City.
+
+Size: 1 row by 3652 columns
+
+Columns: Estimates and Margin of Error for different ZIP codes
+
+#### Vacancy Status
+url:https://data.census.gov/table?q=B250&g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000
+
+This table contains 1-Year Estimates of the number of vacant housing units in five boroughs in New York City.
+
+Size: 8 rows by 12 columns
+
+Columns: Estimates and Margin of Error for five boroughs
+
+Row names: Vacant status(e.g. 'Rented, not occupied')
+
+#### Median Gross Rent by Year Householder Moved into Unit
+url:https://data.census.gov/table?q=B2511&g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&tid=ACSDT1Y2021.B25113
+
+This table contains 1-Year Estimates of the median gross rent by year that householder moved into Unit in five boroughs in New York City.
+
+Size: 7 rows by 12 columns
+
+Columns: Estimates and Margin of Error for five boroughs
+
+Row names: Year householder moved in(e.g. 'Moved in 2019 or later')
+
 ## Cleaning / transformation
+
+As both the datasets are collected by government offices and well organized, ther are tidy and so we didn't perform cleaning methods on them. 
+
+### DOF Condominium Comparable Rental Income in NYC
+We transform some columns(such as Building Classification and Boro-block-lot) to easier identified formats for specific visualization tasks. The code is attached in the Results part.
+
+### Housing:United States Census Bureau
+The transformation of the data from USCB mainly concentrates on two parts: tidying data and type conversion. The problem of the data sets is the geographical labels are listed in the columns. We will use the function 'pivot_longer' to deal with it. And we will use the function 'gsub' to clean the data and change the character to numerical data type.
 
 ## Missing value analysis
 
+### DOF Condominium Comparable Rental Income in NYC
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(ggridges)
+library(forcats)
+library(tigris)
+library(leaflet)
+library(sp)
+library(ggmap)
+library(maptools)
+library(broom)
+library(httr)
+library(rgdal)
+library(geojsonio)
+library(colorspace)
+library(naniar)
+library(mi)
+library(DataExplorer)
+```
+
+```{r setup, include=FALSE}
+dat1=read.csv("E:/CU22fall/EDAV/FinalProjectEDAV/Data/DOF_Condominium_Comparable_Rental_Income_in_NYC.csv")
+dat1=dat1[,1:15]
+dat_county=dat1 %>% 
+  mutate(county = case_when(
+    substring(Boro.Block.Lot,1,1) == "1" ~ "new york",
+    substring(Boro.Block.Lot,1,1) == "2" ~ "bronx",
+    substring(Boro.Block.Lot,1,1) == "3" ~ "kings",
+    substring(Boro.Block.Lot,1,1) == "4" ~ "queens",
+    substring(Boro.Block.Lot,1,1) == "5" ~ "richmond"
+  )
+)
+```
+
+```{r}
+dat_house_county=dat_county %>% 
+  mutate(house_type = case_when(
+    substring(Building.Classification,2,2) == "4" ~ "R4",
+    substring(Building.Classification,2,2) == "9" ~ "R9",
+    substring(Building.Classification,2,2) == "2" ~ "R2",
+    substring(Building.Classification,2,2) == "R" ~ "RR"
+  )
+)
+```
+
+```{r fig.width=5}
+dat1_missing=dat_house_county
+#colSums(is.na(dat1_missing))%>%sort(decreasing = TRUE)
+dat1_missing=dat1_missing%>%replace_with_na(replace = list(Year.Built = c(0)))
+colSums(is.na(dat1_missing))%>%sort(decreasing = TRUE)
+```
+
+According to the counts of missing values in each column, we can see that the majority of NAs are about when the building was built. As there are too many variables, we focus our analysis only on those with at least one missing value.
+
+```{r fig.width=5}
+dat1_missing1=dat1_missing[,c(7,11,12,14,15)]
+plot_missing(dat1_missing1)
+
+
+dat1_missing2=dat1_missing[,c(7,16)]
+dat1_missing2_summmary=dat1_missing2%>%group_by(county)%>%summarise(cnt.na=sum(is.na(Year.Built)))%>%ungroup()
+
+dat1_missing2_cnt=dat1_missing2%>%group_by(county)%>%count(county)%>%ungroup()
+dat1_missing2_summmary=cbind(dat1_missing2_summmary,dat1_missing2_cnt[,2])
+dat1_missing2_summmary$percent=dat1_missing2_summmary$cnt.na/dat1_missing2_summmary$n
+dat1_missing2_summmary
+```
+
+As there are more than 20,000 rows of data, most of the rows are complete cases. Among the variables we care about, Year.Built is the only one that has several missing values. Thus, we perform analysis on the missing pattern between this variable and the county the building belongs to. We find that Richmond County (Staten Island Borough) has the largest percentage of missing values and also the least number of buildings in our analysis.
+
+### Housing:United States Census Bureau
+```{r}
+GrossRent = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25063 Gross Rent/B25063-2021.xlsx',sheet=2))
+GrossRent = GrossRent[4:27,c(1,2,4,6,8,10)]
+sum(is.na(GrossRent))
+```
+```{r}
+MedianGrossRent = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25064 MEDIAN GROSS RENT/B25064 ALL 5 YEARS.xlsx'))
+MedianGrossRent = MedianGrossRent[-1,c(1,4,6,8,10,12,14)]
+sum(is.na(MedianGrossRent))
+```
+```{r}
+VacancyStatus = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25004 VACANCY STATUS/B25004-2021.xlsx',sheet=2))
+VacancyStatus = VacancyStatus[3:9,c(1,2,4,6,8,10)]
+sum(is.na(VacancyStatus))
+```
+```{r}
+MGR_YearMoved = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/B25113 MEDIAN GROSS RENT BY YEAR HOUSEHOLDER/B25113-2021.xlsx',sheet=2))
+MGR_YearMoved = MGR_YearMoved[4:9,c(1,2,4,6,8,10)]
+sum(is.na(MGR_YearMoved))
+```
+```{r}
+MapData = suppressMessages(read_excel('E:/CU22fall/EDAV/FinalProjectEDAV/MapData/Map-2021.xlsx',sheet=2))
+for(i in colnames(MapData)){
+  names(MapData)[names(MapData) == i] = gsub("ZCTA5 ", "",i)
+}
+columns = rep(0,length(MapData)/2-1)
+i=2;k=1;
+while(i<=length(MapData)){
+  columns[k] = i
+  i = i+2
+  k = k+1
+}
+MapData = MapData[2,columns]
+MapData = t(MapData)
+sum(is.na(MapData))
+```
+```{r}
+plot_missing(MGR_YearMoved)
+```
+
+According to the counts of missing values for each table, none of them has missing values in any column. Take the table about the median gross rent by year householder moved into unit for example, we can draw a missing data plot. Because the type of variables from USCB is character, we may need further analysis to see if there are missing values. 

@@ -1,1 +1,332 @@
-# Results
+---
+title: "finalproj"
+output: html_document
+---
+```{r echo=FALSE}
+library(ggplot2)
+library(dplyr)
+library(readxl)
+library(tidyr)
+library(grid)
+library(ggridges)
+library(forcats)
+library(tigris)
+library(leaflet)
+library(sp)
+library(ggmap)
+library(maptools)
+library(broom)
+library(httr)
+library(rgdal)
+library(geojsonio)
+library(colorspace)
+library(naniar)
+library(mi)
+```
+
+```{r echo=FALSE}
+dat1=read.csv("DOF_Condominium_Comparable_Rental_Income_in_NYC.csv")
+dat1=dat1[,1:15]
+dat_county=dat1 %>% 
+  mutate(county = case_when(
+    substring(Boro.Block.Lot,1,1) == "1" ~ "new york",
+    substring(Boro.Block.Lot,1,1) == "2" ~ "bronx",
+    substring(Boro.Block.Lot,1,1) == "3" ~ "kings",
+    substring(Boro.Block.Lot,1,1) == "4" ~ "queens",
+    substring(Boro.Block.Lot,1,1) == "5" ~ "richmond"
+  )
+)
+```
+
+```{r}
+#ggplot(dat1, aes(x=Gross.Income.per.SqFt)) +
+#  geom_histogram(color = "blue", fill = "lightBlue",binwidth = 2)+
+#  facet_wrap(~county)
+
+
+county_order=reorder(dat_county$county, dat_county$Gross.Income.per.SqFt,median)
+ggplot(dat_county, aes(x = Gross.Income.per.SqFt, y = county_order,fill = factor(county))) +
+  geom_density_ridges()+
+  scale_fill_manual(values=rainbow_hcl(5),name="")+
+  ylab("Borough")+
+  xlab(bquote("Gross Income per "~ft^2))
+  
+```
+
+From the ridgeline plots of the gross income per square feet in five counties of NYC, we can see that they all roughly follow a normal distribution (with Queens having a little more deviation). 
+New York has the largest median value about 40/$ft^2$ and the widest spread. For the rest 4 counties, their median values are close to each other. The values for richmond is more densely distributed.
+
+
+```{r}
+dat_house_county=dat_county %>% 
+  mutate(house_type = case_when(
+    substring(Building.Classification,2,2) == "4" ~ "R4",
+    substring(Building.Classification,2,2) == "9" ~ "R9",
+    substring(Building.Classification,2,2) == "2" ~ "R2",
+    substring(Building.Classification,2,2) == "R" ~ "RR"
+  )
+)
+```
+
+```{r}
+#ggplot(dat_class_region, aes(x = Gross.Income.per.SqFt, y = #reorder(house_type, -Gross.Income.per.SqFt))) +
+#  geom_density_ridges(fill = "blue") 
+house_order=reorder(dat_house_county$house_type, dat_house_county$Gross.Income.per.SqFt,median)
+ggplot(dat_house_county, aes(x = Gross.Income.per.SqFt, y = house_order,fill = factor(house_type))) +
+  geom_density_ridges()+
+  scale_fill_manual(values=rainbow_hcl(5),name="")+
+  ylab("Building Classification")+
+  xlab(bquote("Gross Income per "~ft^2))
+
+```
+
+From the ridgeline plots of the gross income per square feet in 4 building classes of NYC, we can see that they all have similar price range and roughly follow a left-skewed distribution. The distribution of R9 class is a little special. It roughly follows a bimodal distribution.
+
+```{r fig.width=5}
+dat1_missing=dat_house_county
+#colSums(is.na(dat1_missing))%>%sort(decreasing = TRUE)
+dat1_missing=dat1_missing%>%replace_with_na(replace = list(Year.Built = c(0)))
+colSums(is.na(dat1_missing))%>%sort(decreasing = TRUE)
+```
+According to the counts of missing values in each column, we can see that the majority of NAs are about when the building was built. As there are too many variables, we focus our analysis only on those with at least one missing value.
+
+
+```{r}
+dat1_yr=dat1[,c("Year.Built","Estimated.Gross.Income","Gross.SqFt")]
+dat1_yr=na.omit(dat1_yr)
+dat1_yr$Year.Built=as.factor(dat1_yr$Year.Built)
+
+dat1_yr_summary=dat1_yr %>%group_by(Year.Built)%>%summarise(Total.Estimated.Income=sum(Estimated.Gross.Income),Total.SqFt=sum(Gross.SqFt))%>%mutate(Avg.Gross.Income.per.SqFt=Total.Estimated.Income/Total.SqFt)%>%ungroup()
+
+
+dat1_yr_summary=dat1_yr_summary[dat1_yr_summary$Year.Built!=0,]
+dat1_yr_summary$Year.Built=as.Date(dat1_yr_summary$Year.Built,format="%Y")
+
+ggplot(dat1_yr_summary,aes(x=Year.Built,y=Avg.Gross.Income.per.SqFt))+
+  geom_point()+
+  ylab(bquote("Averaged Gross Income per "~Ft^2))+
+  xlab("Year Built")
+
+```
+In this plot it seems that the gross income averaged on area is independent from the year the building was established. However when we separate the calculation based on different counties, we obtain the following graphs.
+
+
+```{r}
+dat1_yr_boro=dat_house_county[,c("Year.Built","county","Estimated.Gross.Income","Gross.SqFt")]
+dat1_yr_boro=na.omit(dat1_yr_boro)
+dat1_yr_boro$Year.Built=as.factor(dat1_yr_boro$Year.Built)
+
+
+dat1_yr_boro_summary=dat1_yr_boro %>%group_by(Year.Built,county)%>%summarise(Total.Estimated.Income=sum(Estimated.Gross.Income),Total.SqFt=sum(Gross.SqFt))%>%mutate(Avg.Gross.Income.per.SqFt=Total.Estimated.Income/Total.SqFt)%>%ungroup()
+
+
+dat1_yr_boro_summary=dat1_yr_boro_summary[dat1_yr_boro_summary$Year.Built!=0,]
+dat1_yr_boro_summary$Year.Built=as.Date(dat1_yr_boro_summary$Year.Built,format="%Y")
+```
+
+Plot
+```{r}
+ggplot(data=dat1_yr_boro_summary,aes(x=Year.Built,y=Avg.Gross.Income.per.SqFt,color=factor(county)))+
+  geom_point()+
+  geom_smooth(method="loess", span=.9,se=FALSE)+
+  ylab(bquote("Averaged Gross Income per "~Ft^2))+
+  xlab("Year Built")
+
+ggplot(data=dat1_yr_boro_summary,aes(x=Year.Built,y=Avg.Gross.Income.per.SqFt))+
+  geom_point()+
+  facet_wrap(~county,nrow=5,scales = "free_y")+
+  ylab(bquote("Averaged Gross Income per "~Ft^2))+
+  xlab("Year Built")
+```
+
+For all the five counties, we can see a increasing trend in the gross income per $ft^2$ versus the year when the building was built after around 1970s, and the slope becomes more obvious in recent 20 years. Except for Richmond County, the curves for the other 4 counties first went downward before 1970s. The average gross income for Bronx County and Richmond County varies slightly regarding the establishing year while it changes relatively a lot for the other 3 counties.
+
+```{r}
+dat_class_region_summary=dat_class_region%>%group_by(county)%>%count(house_type)%>%ungroup()
+```
+
+```{r}
+#mosaic plot
+vcd::mosaic(county ~ house_type, dat_class_region_summary)
+```
+This mosaic plot shows the proportion of different housing types in different regions. This reveals the popularity of different room types, and combined with other visual analysis, we can further analyze the impact of room types on rental.
+
+
+```{r}
+GrossRent = suppressMessages(read_excel('B25063-2021.xlsx',sheet=2))
+GrossRent = GrossRent[4:27,c(1,2,4,6,8,10)]
+
+GrossRent <- GrossRent %>% rename('Range'='...1')  %>% rename('Bronx'='Bronx borough, Bronx County, New York') %>% rename('Brooklyn'='Brooklyn borough, Kings County, New York') %>% rename('Manhattan'='Manhattan borough, New York County, New York') %>% rename('Queens'='Queens borough, Queens County, New York') %>% rename('Staten Island'='Staten Island borough, Richmond County, New York')
+
+GrossRent <- GrossRent %>% pivot_longer(c('Bronx','Brooklyn','Manhattan','Queens','Staten Island'), names_to = 'Region', values_to = 'Count')
+
+GrossRent$Count <- gsub(",", "", GrossRent$Count) 
+class(GrossRent$Count) = 'numeric'
+
+GrossRent=GrossRent %>% 
+  mutate(NumRange = case_when(
+    Range == 'Less than $100' ~ "0",
+    Range == '$100 to $149' ~ "1",
+    Range == '$150 to $199' ~ "1.5",
+    Range == '$200 to $249' ~ "2",
+    Range == '$250 to $299' ~ '2.5',
+    Range == '$300 to $349' ~ "3",
+    Range == '$350 to $399' ~ "3.5",
+    Range == '$400 to $449' ~ "4",
+    Range == '$450 to $499' ~ "4.5",
+    Range == '$500 to $549' ~ "5",
+    Range == '$550 to $599' ~ "5.5",
+    Range == '$600 to $649' ~ "6",
+    Range == '$650 to $699' ~ "6.5",
+    Range == '$700 to $749' ~ "7",
+    Range == '$750 to $799' ~ "7.5",
+    Range == '$800 to $899' ~ "8",
+    Range == '$900 to $999' ~ "9",
+    Range == '$1,000 to $1,249' ~ "10",
+    Range == '$1,250 to $1,499' ~ "12.5",
+    Range == '$1,500 to $1,999' ~ "15",
+    Range == '$2,000 to $2,499' ~ "20",
+    Range == '$2,500 to $2,999' ~ "25",
+    Range == '$3,000 to $3,499' ~ "30",
+    Range == '$3,500 or more' ~ "35"
+  )
+)
+class(GrossRent$NumRange) = 'numeric'
+```
+
+
+```{r}
+OrderRange=c('0','1','1.5','2','2.5','3','3.5','4','4.5','5','5.5','6','6.5','7','7.5','8','9','10','12.5','15','20','25','30','35')
+ggplot(data = GrossRent) +
+  geom_histogram(mapping=aes(x=factor(NumRange,level=OrderRange), y=Count), stat = 'identity')+
+  facet_wrap(~Region,ncol=1,scales='free_y')+
+  xlab('Range of Rent(hundreds of dollars)')+
+  ylab('Number of Housing Units')+
+  ggtitle("Gross Rent for Different Boroughs")
+
+```
+
+This histogram shows the the gross rent for different boroughs using 1-year estimate in 2021. The distributions of the rent in Brooklyn, Queens and Staten Island are approximately distributed and most of values fall in the range '\$1,500 to \$1,999'. The distribution for Bronx is left skewed. Most of housing units in Manhattan have the rent price higher than 3500 dollars. We also notice the size of data for Staten Island is smaller than other boroughs, which means its rental market is less buoyant than elsewhere.
+
+
+```{r}
+MedianGrossRent = suppressMessages(read_excel('B25064 ALL 5 YEARS.xlsx'))
+MedianGrossRent = MedianGrossRent[-1,c(1,4,6,8,10,12,14)]
+MedianGrossRent <- MedianGrossRent %>% rename('Year'='Median gross rent') %>% rename('Bronx'='Bronx borough, Bronx County, New York') %>% rename('Brooklyn'='Brooklyn borough, Kings County, New York') %>% rename('Manhattan'='Manhattan borough, New York County, New York') %>% rename('Queens'='Queens borough, Queens County, New York') %>% rename('Staten Island'='Staten Island borough, Richmond County, New York') %>% rename('NYC'='New York city, New York')
+
+MedianGrossRent <- MedianGrossRent %>% pivot_longer(c('Bronx','Brooklyn','Manhattan','Queens','Staten Island','NYC'), names_to = 'Region', values_to = 'Median.Gross.Rent')
+
+MedianGrossRent$Median.Gross.Rent <- gsub(",", "", MedianGrossRent$Median.Gross.Rent) 
+class(MedianGrossRent$Median.Gross.Rent) = 'numeric'
+```
+
+```{r}
+ggplot(MedianGrossRent,aes(x=Year,y=Median.Gross.Rent,color=Region,group=Region))+
+  geom_point(size=3)+
+  geom_line(size=1)+
+  scale_colour_discrete(
+    name="Region",
+    breaks = c('NYC','Bronx','Brooklyn','Manhattan','Queens','Staten Island'))+
+  ylab('Median Gross Rent($)')+
+  theme_grey(16)
+  
+```
+
+This line chart shows the median gross rent for different boroughs. Because we use the 5-year estimate, the trends are very pronounced. The gross rent has been rising steadily in the past five years. The increasing rates are very similar among different boroughs. The line for Brooklyn is closet to the line for NYC. The order of the median gross rent from high to low is: Manhattan, Queens, Brooklyn, Staten Island and Bronx for all the years.
+
+```{r}
+VacancyStatus = suppressMessages(read_excel('B25004-2021.xlsx',sheet=2))
+VacancyStatus = VacancyStatus[3:9,c(1,2,4,6,8,10)]
+
+VacancyStatus <- VacancyStatus %>% rename('Status'='...1')  %>% rename('Bronx'='Bronx borough, Bronx County, New York') %>% rename('Brooklyn'='Brooklyn borough, Kings County, New York') %>% rename('Manhattan'='Manhattan borough, New York County, New York') %>% rename('Queens'='Queens borough, Queens County, New York') %>% rename('Staten Island'='Staten Island borough, Richmond County, New York')
+
+VacancyStatus <- VacancyStatus %>% pivot_longer(c('Bronx','Brooklyn','Manhattan','Queens','Staten Island'), names_to = 'Borough', values_to = 'Vacancy')
+
+VacancyStatus$Vacancy <- gsub(",", "", VacancyStatus$Vacancy) 
+class(VacancyStatus$Vacancy) = 'numeric'
+```
+
+```{r}
+ggplot(VacancyStatus, aes(x = Borough, y=Vacancy, fill = Status)) + 
+  geom_bar(stat='identity') +
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+  ylab('Number of Vacant Housing Units')
+```
+
+This stacked bar plot shows the number of vacant housing units and their vacant status in different boroughs in 2021. Manhattan has the most vacant housing units, and the status 'For rent' and 'For seasonal,recreational,or occasional use' make up the most of them. The underlying reason might be the impact of epidemic, which prevent people from renting housing units in Manhattan since its has the highest price over all the boroughs. While for the other four boroughs, other types of vacancy make up the largest proportion. We can further analyze the reason of this kind of vacancy structure.
+
+```{r}
+MGR_YearMoved = suppressMessages(read_excel('B25113-2021.xlsx',sheet=2))
+MGR_YearMoved = MGR_YearMoved[4:9,c(1,2,4,6,8,10)]
+MGR_YearMoved <- MGR_YearMoved %>% rename('Movedin.Year'='...1')  %>% rename('Bronx'='Bronx borough, Bronx County, New York') %>% rename('Brooklyn'='Brooklyn borough, Kings County, New York') %>% rename('Manhattan'='Manhattan borough, New York County, New York') %>% rename('Queens'='Queens borough, Queens County, New York') %>% rename('Staten Island'='Staten Island borough, Richmond County, New York')
+
+MGR_YearMoved <- MGR_YearMoved %>% pivot_longer(c('Bronx','Brooklyn','Manhattan','Queens','Staten Island'), names_to = 'Borough', values_to = 'Median.Gross.Rent')
+
+MGR_YearMoved$Median.Gross.Rent <- gsub(",", "", MGR_YearMoved$Median.Gross.Rent) 
+class(MGR_YearMoved$Median.Gross.Rent) = 'numeric'
+```
+
+```{r}
+ggplot(MGR_YearMoved, aes(x = Borough, y =Median.Gross.Rent , fill = Borough)) +
+  geom_col(position = "dodge")+
+  scale_colour_discrete(
+    name="Borough")+
+  ylab('Median Gross Rent($)')+
+  coord_flip()+
+  facet_wrap(~Movedin.Year)+
+  xlab('Borough')+
+  ggtitle("Median Gross Rent by \nYear Householder Moved into Unit")
+```
+
+This plot uses the year householder moved in as its facet. From this plot, the median gross rent has been increasing with the time the householder moved in. We know that some buildings will maintain a close rental price when the residents renew the tenancy agreement. The gaps among the median gross rent can reflect the change of the rental marketing market over time. It is obvious that the median gross rent increased the most for housing units in Manhattan. We can further analyze the data by investigating what happened in the time period between 2014-2018.
+
+```{r}
+NYCjs <- geojson_read("https://data.beta.nyc/dataset/3bf5fb73-edb5-4b05-bb29-7c95f4a727fc/resource/894e9162-871c-4552-a09c-c6915d8783fb/download/zip_code_040114.geojson",what = "sp")
+plot(NYCjs)
+
+if (!require(gpclib)) install.packages("gpclib", type="source")
+gpclibPermit()
+NYCjs_fortified <- broom::tidy(NYCjs, region = "ZIPCODE")
+```
+
+```{r}
+MapData = suppressMessages(read_excel('MapData/Map-2021.xlsx',sheet=2))
+
+for(i in colnames(MapData)){
+  names(MapData)[names(MapData) == i] = gsub("ZCTA5 ", "",i)
+}
+columns = rep(0,length(MapData)/2-1)
+i=2;k=1;
+while(i<=length(MapData)){
+  columns[k] = i
+  i = i+2
+  k = k+1
+}
+
+MapData = MapData[2,columns]
+MapData = t(MapData)
+```
+```{r}
+MapData <-  data.frame(rownames(MapData),MapData)
+MapData <- MapData %>% rename('Region'='rownames.MapData.') %>% rename('MGR'='MapData')
+rownames(MapData) <- 1:nrow(MapData)
+
+MapData$MGR <- gsub(",", "", MapData$MGR) 
+MapData$MGR <- gsub("\\+", "", MapData$MGR)
+class(MapData$MGR) = 'numeric'
+
+NYCjs_fortified = NYCjs_fortified %>%
+  left_join(. , MapData, by=c("id"="Region"))
+```
+Two inputs are needed to build a choropleth map: A geospatial object providing region boundaries and a numeric variable that we use to color each geographical unit. We use the geoJSON format which provides the ZIP code boundaries in New Yor City and the median gross rent of housing units per code.
+We transform the geospatial object to a data frame using the tidy function of the broom library and bind it with the numeric data. For the regions without corresponding value, they will be filled in color grey in the map.
+
+```{r}
+ggplot() +
+  geom_polygon(data = NYCjs_fortified, aes(fill = MGR, x = long, y = lat, group = group),color='grey',size=0.2) +
+  theme_void() +
+  coord_map() +
+  scale_fill_viridis()
+```
+
+From this choropleth map, we can notice that the overall situation of the rent in the five boroughs correspond with what we have analyzed for other plots. According to the distribution of the color, the order of rental price from high to low is: Manhattan, Queens, Brooklyn, Staten Island and Bronx. To be more specific, the median gross rents in Lower Manhattan and Midtown Manhattan are significantly higher than other regions. The rent in the area near the River Easter is much higher than its average in Brooklyn. Although not far from midtown Manhattan, the regions near the boarder between Manhattan and Bronx has relatively low value for the median gross rent. This map can be used to connect with other index such as crime rate to do deeper analysis of the cause of different rental price.
