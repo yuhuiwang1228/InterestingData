@@ -69,7 +69,7 @@ dat_house_county=dat_county %>%
 ```
 
 ```{r}
-#ggplot(dat_class_region, aes(x = Gross.Income.per.SqFt, y = #reorder(house_type, -Gross.Income.per.SqFt))) +
+#ggplot(dat_house_county, aes(x = Gross.Income.per.SqFt, y = #reorder(house_type, -Gross.Income.per.SqFt))) +
 #  geom_density_ridges(fill = "blue") 
 house_order=reorder(dat_house_county$house_type, dat_house_county$Gross.Income.per.SqFt,median)
 ggplot(dat_house_county, aes(x = Gross.Income.per.SqFt, y = house_order,fill = factor(house_type))) +
