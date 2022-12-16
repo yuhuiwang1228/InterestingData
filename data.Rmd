@@ -122,7 +122,7 @@ library(DataExplorer)
 library(readxl)
 ```
 
-```{r setup, include=FALSE}
+```{r}
 dat1=read.csv("DOF_Condominium_Comparable_Rental_Income_in_NYC.csv")
 dat1=dat1[,1:15]
 dat_county=dat1 %>% 

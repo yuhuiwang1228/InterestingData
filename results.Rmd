@@ -1,7 +1,5 @@
----
-title: "finalproj"
-output: html_document
----
+# Results
+
 ```{r echo=FALSE}
 library(ggplot2)
 library(dplyr)
@@ -22,6 +20,8 @@ library(geojsonio)
 library(colorspace)
 library(naniar)
 library(mi)
+library(viridis)
+library(mapproj)
 ```
 
 ```{r echo=FALSE}
@@ -290,7 +290,7 @@ NYCjs_fortified <- broom::tidy(NYCjs, region = "ZIPCODE")
 ```
 
 ```{r}
-MapData = suppressMessages(read_excel('MapData/Map-2021.xlsx',sheet=2))
+MapData = suppressMessages(read_excel('Map-2021.xlsx',sheet=2))
 
 for(i in colnames(MapData)){
   names(MapData)[names(MapData) == i] = gsub("ZCTA5 ", "",i)

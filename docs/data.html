@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data | Research on NYC Rental Data</title>
-  <meta name="description" content="Chapter 3 Data | Research on NYC Rental Data" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <title>Chapter 3 Data | NYC Rentals</title>
+  <meta name="description" content="Chapter 3 Data | NYC Rentals" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data | Research on NYC Rental Data" />
+  <meta property="og:title" content="Chapter 3 Data | NYC Rentals" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data | Research on NYC Rental Data" />
+  <meta name="twitter:title" content="Chapter 3 Data | NYC Rentals" />
   
   
   
 
-<meta name="author" content="Nancy Wang, Shukai Wang, Hao Pan" />
+<meta name="author" content="Wang Nancy, Shukai Wang, Hao Pan" />
 
 
-<meta name="date" content="2022-11-02" />
+<meta name="date" content="2022-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -86,9 +86,21 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#dof-condominium-comparable-rental-income-in-nyc-1"><i class="fa fa-check"></i><b>3.1.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#housingunited-states-census-bureau"><i class="fa fa-check"></i><b>3.1.2</b> Housing:United States Census Bureau</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#dof-condominium-comparable-rental-income-in-nyc-2"><i class="fa fa-check"></i><b>3.2.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#housingunited-states-census-bureau-1"><i class="fa fa-check"></i><b>3.2.2</b> Housing:United States Census Bureau</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data.html"><a href="data.html#dof-condominium-comparable-rental-income-in-nyc-3"><i class="fa fa-check"></i><b>3.3.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data.html"><a href="data.html#housingunited-states-census-bureau-2"><i class="fa fa-check"></i><b>3.3.2</b> Housing:United States Census Bureau</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
@@ -104,7 +116,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Research on NYC Rental Data</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NYC Rentals</a>
           </h1>
         </div>
 
@@ -116,13 +128,122 @@
 <h1><span class="header-section-number">Chapter 3</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="sources" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Sources<a href="data.html#sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After refining our project target, we mainly use the following two data sources.</p>
+<div id="dof-condominium-comparable-rental-income-in-nyc-1" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> DOF Condominium Comparable Rental Income in NYC<a href="data.html#dof-condominium-comparable-rental-income-in-nyc-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>url: <a href="https://data.cityofnewyork.us/City-Government/DOF-Condominium-Comparable-Rental-Income-in-NYC/9ck6-2jew" class="uri">https://data.cityofnewyork.us/City-Government/DOF-Condominium-Comparable-Rental-Income-in-NYC/9ck6-2jew</a></p>
+<p>This dataset is used by DOF(The Department of Finance) to value condominiums, which contains basic information of condominiums for rent in New York, including geographic location information (coded by borough ID and priority ID) and house properties. Collected by The Department of Finance (DOF) through the investigation of apartment information, it is highly reliable and basically error free; Because it includes detailed address and house information, this dataset is very convenient for us to analyze the geographical distribution of rental prices. The dataset contains 61 columns, but we only use a few of these. The used columns’ infomation:</p>
+<p>Boro-Block-Lot:
+Text variable. The Borough-Block-Lot location of the subject condominium. The lot identifies the condominium billing lot generally associated with the condominium management organization.</p>
+<p>Building Classification:
+Text variable(we transform it later). The Building Class code is used to describe a property’s use. This report includes the two character code as well as the description of the building class.</p>
+<p>Total Units:
+Number variable. Total number of units in the building</p>
+<p>Year Built:
+Text variable. The year the building was built</p>
+<p>Estimated Gross Income:
+Number variable. Estimated Income per SquareFoot * Gross SquareFoot</p>
+<p>Gross Income per SqFt:<br />
+Number variable. Estimated income per squarefoot of median comparable</p>
+<p>Full Market Value<br />
+Number variable. Current year’s total market value of the land and building</p>
+</div>
+<div id="housingunited-states-census-bureau" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Housing:United States Census Bureau<a href="data.html#housingunited-states-census-bureau" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This data source contains different housing information in New York State provided by the United States Census Bureau(USCB). USCB is a principal agency of the U.S. Federal Statistical System and is in charge of gathering information on the population and economy of the country. We filter the tables by geography and find the topics we are interested in. The dataset can be downloaded as csv or excel file which can be easily imported by R. All the tables from this source is not tidy, and the data type is character although it actually provides numerical information. We will transform it later.</p>
+<div id="gross-rent" class="section level4 hasAnchor" number="3.1.2.1">
+<h4><span class="header-section-number">3.1.2.1</span> Gross Rent<a href="data.html#gross-rent" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>url:<a href="https://data.census.gov/table?q=B250&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&amp;tid=ACSDT1Y2021.B25063" class="uri">https://data.census.gov/table?q=B250&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&amp;tid=ACSDT1Y2021.B25063</a></p>
+<p>This table contains 1-Year Estimates of the rent of the occupied housing units in five boroughs in New York City.</p>
+<p>Size: 27 rows by 12 columns</p>
+<p>Columns: Estimates and Margin of Error for five boroughs</p>
+<p>Row names: The range of rent(e.g. ‘$700 to $749’)</p>
+</div>
+<div id="median-gross-rent-1" class="section level4 hasAnchor" number="3.1.2.2">
+<h4><span class="header-section-number">3.1.2.2</span> Median Gross Rent<a href="data.html#median-gross-rent-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>url:<a href="https://data.census.gov/table?q=B250&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&amp;tid=ACSDT1Y2021.B25064" class="uri">https://data.census.gov/table?q=B250&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&amp;tid=ACSDT1Y2021.B25064</a></p>
+<p>url:<a href="https://data.census.gov/table?q=B2506&amp;g=0400000US36$8600000&amp;tid=ACSDT5Y2021.B25064" class="uri">https://data.census.gov/table?q=B2506&amp;g=0400000US36$8600000&amp;tid=ACSDT5Y2021.B25064</a></p>
+<p>The first table contains 5-Year Estimates of the median gross rent of the occupied housing units in five boroughs in New York City in different years.</p>
+<p>Size:6 rows by 12 columns</p>
+<p>Columns: Estimates and Margin of Error for five boroughs</p>
+<p>Row names: Year</p>
+<p>The second table contains 1-Year Estimates of the median gross rent of the occupied housing units filter by the ZIP code in New York City.</p>
+<p>Size: 1 row by 3652 columns</p>
+<p>Columns: Estimates and Margin of Error for different ZIP codes</p>
+</div>
+<div id="vacancy-status" class="section level4 hasAnchor" number="3.1.2.3">
+<h4><span class="header-section-number">3.1.2.3</span> Vacancy Status<a href="data.html#vacancy-status" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>url:<a href="https://data.census.gov/table?q=B250&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000" class="uri">https://data.census.gov/table?q=B250&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000</a></p>
+<p>This table contains 1-Year Estimates of the number of vacant housing units in five boroughs in New York City.</p>
+<p>Size: 8 rows by 12 columns</p>
+<p>Columns: Estimates and Margin of Error for five boroughs</p>
+<p>Row names: Vacant status(e.g. ‘Rented, not occupied’)</p>
+</div>
+<div id="median-gross-rent-by-year-householder-moved-into-unit" class="section level4 hasAnchor" number="3.1.2.4">
+<h4><span class="header-section-number">3.1.2.4</span> Median Gross Rent by Year Householder Moved into Unit<a href="data.html#median-gross-rent-by-year-householder-moved-into-unit" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>url:<a href="https://data.census.gov/table?q=B2511&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&amp;tid=ACSDT1Y2021.B25113" class="uri">https://data.census.gov/table?q=B2511&amp;g=0600000US3600508510,3604710022,3606144919,3608160323,3608570915_1600000US3651000&amp;tid=ACSDT1Y2021.B25113</a></p>
+<p>This table contains 1-Year Estimates of the median gross rent by year that householder moved into Unit in five boroughs in New York City.</p>
+<p>Size: 7 rows by 12 columns</p>
+<p>Columns: Estimates and Margin of Error for five boroughs</p>
+<p>Row names: Year householder moved in(e.g. ‘Moved in 2019 or later’)</p>
+</div>
+</div>
 </div>
 <div id="cleaning-transformation" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Cleaning / transformation<a href="data.html#cleaning-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As both the datasets are collected by government offices and well organized, ther are tidy and so we didn’t perform cleaning methods on them.</p>
+<div id="dof-condominium-comparable-rental-income-in-nyc-2" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> DOF Condominium Comparable Rental Income in NYC<a href="data.html#dof-condominium-comparable-rental-income-in-nyc-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We transform some columns(such as Building Classification and Boro-block-lot) to easier identified formats for specific visualization tasks. The code is attached in the Results part.</p>
+</div>
+<div id="housingunited-states-census-bureau-1" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Housing:United States Census Bureau<a href="data.html#housingunited-states-census-bureau-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The transformation of the data from USCB mainly concentrates on two parts: tidying data and type conversion. The problem of the data sets is the geographical labels are listed in the columns. We will use the function ‘pivot_longer’ to deal with it. And we will use the function ‘gsub’ to clean the data and change the character to numerical data type.</p>
+</div>
 </div>
 <div id="missing-value-analysis" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Missing value analysis<a href="data.html#missing-value-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="dof-condominium-comparable-rental-income-in-nyc-3" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> DOF Condominium Comparable Rental Income in NYC<a href="data.html#dof-condominium-comparable-rental-income-in-nyc-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>##              Year.Built   Market.Value.per.SqFt 
+##                     108                       3 
+##       Full.Market.Value       Estimated.Expense 
+##                       2                       1 
+##        Expense.per.SqFt          Boro.Block.Lot 
+##                       1                       0 
+##           Condo.Section                 Address 
+##                       0                       0 
+##            Neighborhood Building.Classification 
+##                       0                       0 
+##             Total.Units              Gross.SqFt 
+##                       0                       0 
+##  Estimated.Gross.Income   Gross.Income.per.SqFt 
+##                       0                       0 
+##    Net.Operating.Income                  county 
+##                       0                       0 
+##              house_type 
+##                       0</code></pre>
+<p>According to the counts of missing values in each column, we can see that the majority of NAs are about when the building was built. As there are too many variables, we focus our analysis only on those with at least one missing value.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="480" /></p>
+<pre><code>##     county cnt.na     n      percent
+## 1    bronx      1  1042 0.0009596929
+## 2    kings     97  9314 0.0104144299
+## 3 new york      2 12784 0.0001564456
+## 4   queens      2  5022 0.0003982477
+## 5 richmond      6   345 0.0173913043</code></pre>
+<p>As there are more than 20,000 rows of data, most of the rows are complete cases. Among the variables we care about, Year.Built is the only one that has several missing values. Thus, we perform analysis on the missing pattern between this variable and the county the building belongs to. We find that Richmond County (Staten Island Borough) has the largest percentage of missing values and also the least number of buildings in our analysis.</p>
+</div>
+<div id="housingunited-states-census-bureau-2" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Housing:United States Census Bureau<a href="data.html#housingunited-states-census-bureau-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>According to the counts of missing values for each table, none of them has missing values in any column. Take the table about the median gross rent by year householder moved into unit for example, we can draw a missing data plot. Because the type of variables from USCB is character, we may need further analysis to see if there are missing values.</p>
 
+</div>
 </div>
 </div>
             </section>

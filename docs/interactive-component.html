@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Interactive component | Research on NYC Rental Data</title>
-  <meta name="description" content="Chapter 5 Interactive component | Research on NYC Rental Data" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <title>Chapter 5 Interactive component | NYC Rentals</title>
+  <meta name="description" content="Chapter 5 Interactive component | NYC Rentals" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Interactive component | Research on NYC Rental Data" />
+  <meta property="og:title" content="Chapter 5 Interactive component | NYC Rentals" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Interactive component | Research on NYC Rental Data" />
+  <meta name="twitter:title" content="Chapter 5 Interactive component | NYC Rentals" />
   
   
   
 
-<meta name="author" content="Nancy Wang, Shukai Wang, Hao Pan" />
+<meta name="author" content="Wang Nancy, Shukai Wang, Hao Pan" />
 
 
-<meta name="date" content="2022-11-02" />
+<meta name="date" content="2022-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -86,9 +86,21 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#dof-condominium-comparable-rental-income-in-nyc-1"><i class="fa fa-check"></i><b>3.1.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#housingunited-states-census-bureau"><i class="fa fa-check"></i><b>3.1.2</b> Housing:United States Census Bureau</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#dof-condominium-comparable-rental-income-in-nyc-2"><i class="fa fa-check"></i><b>3.2.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#housingunited-states-census-bureau-1"><i class="fa fa-check"></i><b>3.2.2</b> Housing:United States Census Bureau</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data.html"><a href="data.html#dof-condominium-comparable-rental-income-in-nyc-3"><i class="fa fa-check"></i><b>3.3.1</b> DOF Condominium Comparable Rental Income in NYC</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data.html"><a href="data.html#housingunited-states-census-bureau-2"><i class="fa fa-check"></i><b>3.3.2</b> Housing:United States Census Bureau</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
@@ -104,7 +116,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Research on NYC Rental Data</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NYC Rentals</a>
           </h1>
         </div>
 
@@ -114,6 +126,130 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Interactive component<a href="interactive-component.html#interactive-component" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script src="https://d3js.org/d3.v4.js"></script>
+<div id="div1">
+
+</div>
+<script>
+
+  const width = 960; 
+  const height = 1160;
+
+    
+  const projection = d3.geoEquirectangular()
+    .scale(47000)
+    .translate([400,250]);
+    
+  const svg = d3.select("div#div1").append("svg")
+    .attr("width", 1500)
+    .attr("height", 1500);
+    
+  svg.append("text").text("")
+        .attr("x", "300")
+        .attr("y", "50")
+        .attr("font-weight","bold");
+  svg.append("path").attr("id","p1")
+      .attr("fill","#E76BF3");
+  svg.append("path").attr("id","p2").attr("fill","#F8766D");
+  svg.append("path").attr("id","p3").attr("fill","#00BF7D");
+  svg.append("path").attr("id","p4").attr("fill","#A3A500");
+  svg.append("path").attr("id","p5").attr("fill","#00B0F6");
+   
+  d3.json("https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/Borough%20Boundaries.geojson",function(error, nycMap) {
+    const center = d3.geoCentroid(nycMap);
+    projection.center(center);
+    const path = d3.geoPath().projection(projection);
+    svg.selectAll("path")
+      .data(nycMap.features)
+      .attr("d", path);
+  });
+
+
+const imgx=100;
+const imgy=430
+
+svg.select("path#p1")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/richmond.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+        svg.select("text").text("Richmond County");
+      });
+      
+svg.select("path#p1")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+        svg.select("text").text("");
+      });   
+      
+svg.select("path#p2")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/bronx.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+        svg.select("text").text("Bronx County");
+      });
+      
+svg.select("path#p2")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+        svg.select("text").text("");
+      }); 
+      
+svg.select("path#p3")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/newyork.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+        svg.select("text").text("New York County");
+      });
+      
+svg.select("path#p3")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+        svg.select("text").text("");
+      }); 
+      
+svg.select("path#p4")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/kings.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+       svg.select("text").text("Kings County");
+      
+      });
+      
+svg.select("path#p4")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+       svg.select("text").text("");
+      }); 
+      
+svg.select("path#p5")
+   .on("mouseover", function() {
+       svg.append("image")
+          .attr("href","https://raw.githubusercontent.com/yuhuiwang1228/NYCRentals/main/queens.png")
+          .attr("x",imgx)
+          .attr("y",imgy);
+       svg.select("text").text("Queens County");
+      });
+      
+svg.select("path#p5")
+   .on("mouseout", function() {
+       svg.select("image")
+          .remove();
+       svg.select("text").text("");
+      }); 
+      
+</script>
 
 </div>
             </section>
