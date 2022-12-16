@@ -176,22 +176,22 @@ As there are more than 20,000 rows of data, most of the rows are complete cases.
 ```{r}
 GrossRent = suppressMessages(read_excel('B25063-2021.xlsx',sheet=2))
 GrossRent = GrossRent[4:27,c(1,2,4,6,8,10)]
-sum(is.na(GrossRent))
+#sum(is.na(GrossRent))
 ```
 ```{r}
 MedianGrossRent = suppressMessages(read_excel('B25064 ALL 5 YEARS.xlsx'))
 MedianGrossRent = MedianGrossRent[-1,c(1,4,6,8,10,12,14)]
-sum(is.na(MedianGrossRent))
+#sum(is.na(MedianGrossRent))
 ```
 ```{r}
 VacancyStatus = suppressMessages(read_excel('B25004-2021.xlsx',sheet=2))
 VacancyStatus = VacancyStatus[3:9,c(1,2,4,6,8,10)]
-sum(is.na(VacancyStatus))
+#sum(is.na(VacancyStatus))
 ```
 ```{r}
 MGR_YearMoved = suppressMessages(read_excel('B25113-2021.xlsx',sheet=2))
 MGR_YearMoved = MGR_YearMoved[4:9,c(1,2,4,6,8,10)]
-sum(is.na(MGR_YearMoved))
+#sum(is.na(MGR_YearMoved))
 ```
 ```{r}
 MapData = suppressMessages(read_excel('Map-2021.xlsx',sheet=2))
@@ -207,8 +207,9 @@ while(i<=length(MapData)){
 }
 MapData = MapData[2,columns]
 MapData = t(MapData)
-sum(is.na(MapData))
+#sum(is.na(MapData))
 ```
+
 ```{r}
 plot_missing(MGR_YearMoved)
 ```

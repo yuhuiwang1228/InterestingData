@@ -88,6 +88,7 @@ dat1_missing=dat_house_county
 dat1_missing=dat1_missing%>%replace_with_na(replace = list(Year.Built = c(0)))
 colSums(is.na(dat1_missing))%>%sort(decreasing = TRUE)
 ```
+
 According to the counts of missing values in each column, we can see that the majority of NAs are about when the building was built. As there are too many variables, we focus our analysis only on those with at least one missing value.
 
 
@@ -108,6 +109,7 @@ ggplot(dat1_yr_summary,aes(x=Year.Built,y=Avg.Gross.Income.per.SqFt))+
   xlab("Year Built")
 
 ```
+
 In this plot it seems that the gross income averaged on area is independent from the year the building was established. However when we separate the calculation based on different counties, we obtain the following graphs.
 
 
@@ -149,6 +151,7 @@ dat_house_county_summary=dat_house_county%>%group_by(county)%>%count(house_type)
 #mosaic plot
 vcd::mosaic(county ~ house_type, dat_house_county_summary)
 ```
+
 This mosaic plot shows the proportion of different housing types in different regions. This reveals the popularity of different room types, and combined with other visual analysis, we can further analyze the impact of room types on rental.
 
 
@@ -285,7 +288,7 @@ NYCjs <- geojson_read("https://data.beta.nyc/dataset/3bf5fb73-edb5-4b05-bb29-7c9
 plot(NYCjs)
 
 if (!require(gpclib)) install.packages("gpclib", type="source")
-gpclibPermit()
+#gpclibPermit()
 NYCjs_fortified <- broom::tidy(NYCjs, region = "ZIPCODE")
 ```
 

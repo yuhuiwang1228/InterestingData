@@ -1,6 +1,6 @@
 --- 
 title: "NYC Rentals"
-author: "Wang Nancy, Shukai Wang, Hao Pan"
+author: "Nancy Wang, Shukai Wang, Hao Pan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---

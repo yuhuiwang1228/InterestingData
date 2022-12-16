@@ -20,7 +20,7 @@
   
   
 
-<meta name="author" content="Wang Nancy, Shukai Wang, Hao Pan" />
+<meta name="author" content="Nancy Wang, Shukai Wang, Hao Pan" />
 
 
 <meta name="date" content="2022-12-15" />
@@ -150,13 +150,13 @@ New York has the largest median value about 40/<span class="math inline">\(ft^2\
 ##              house_type 
 ##                       0</code></pre>
 <p>According to the counts of missing values in each column, we can see that the majority of NAs are about when the building was built. As there are too many variables, we focus our analysis only on those with at least one missing value.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" />
-In this plot it seems that the gross income averaged on area is independent from the year the building was established. However when we separate the calculation based on different counties, we obtain the following graphs.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>In this plot it seems that the gross income averaged on area is independent from the year the building was established. However when we separate the calculation based on different counties, we obtain the following graphs.</p>
 <p>Plot
 <img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
 <p>For all the five counties, we can see a increasing trend in the gross income per <span class="math inline">\(ft^2\)</span> versus the year when the building was built after around 1970s, and the slope becomes more obvious in recent 20 years. Except for Richmond County, the curves for the other 4 counties first went downward before 1970s. The average gross income for Bronx County and Richmond County varies slightly regarding the establishing year while it changes relatively a lot for the other 3 counties.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" />
-This mosaic plot shows the proportion of different housing types in different regions. This reveals the popularity of different room types, and combined with other visual analysis, we can further analyze the impact of room types on rental.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>This mosaic plot shows the proportion of different housing types in different regions. This reveals the popularity of different room types, and combined with other visual analysis, we can further analyze the impact of room types on rental.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>This histogram shows the the gross rent for different boroughs using 1-year estimate in 2021. The distributions of the rent in Brooklyn, Queens and Staten Island are approximately distributed and most of values fall in the range ‘$1,500 to $1,999’. The distribution for Bronx is left skewed. Most of housing units in Manhattan have the rent price higher than 3500 dollars. We also notice the size of data for Staten Island is smaller than other boroughs, which means its rental market is less buoyant than elsewhere.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
@@ -166,7 +166,6 @@ This mosaic plot shows the proportion of different housing types in different re
 <p><img src="finalproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>This plot uses the year householder moved in as its facet. From this plot, the median gross rent has been increasing with the time the householder moved in. We know that some buildings will maintain a close rental price when the residents renew the tenancy agreement. The gaps among the median gross rent can reflect the change of the rental marketing market over time. It is obvious that the median gross rent increased the most for housing units in Manhattan. We can further analyze the data by investigating what happened in the time period between 2014-2018.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
-<pre><code>## [1] TRUE</code></pre>
 <p>Two inputs are needed to build a choropleth map: A geospatial object providing region boundaries and a numeric variable that we use to color each geographical unit. We use the geoJSON format which provides the ZIP code boundaries in New Yor City and the median gross rent of housing units per code.
 We transform the geospatial object to a data frame using the tidy function of the broom library and bind it with the numeric data. For the regions without corresponding value, they will be filled in color grey in the map.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
